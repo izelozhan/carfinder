@@ -14,13 +14,11 @@ const DetailBottomSection: React.FC<{
           ml-auto mr-auto items-stretch"
     >
       <div
-        className="flex flex-col text-black items-start 
-            sm:mr-0
+        className="flex flex-col text-black items-start sm:mr-0
             md:mr-4
             lg:mr-4
             xl:mr-4
             2xl:mr-4   
-            
             sm:w-full
             md:w-1/2
             lg:w-1/2

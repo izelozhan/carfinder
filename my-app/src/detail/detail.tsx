@@ -15,6 +15,7 @@ const Details: React.FC = () => {
   const navigate = useNavigate();
   const { name } = useParams();
   const [renderChart, setRenderChart] = useState(false);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -129,8 +130,6 @@ const Details: React.FC = () => {
           {/* right side contents */}
           <DetailSpecs car={car}/>
         </div>
-
-
         {/* bottom section */}
         <DetailBottomSection car={car} renderChart={renderChart} />
       </div>

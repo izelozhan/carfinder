@@ -11,7 +11,7 @@ interface SearchBoxProps {
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({ addedIds, onAdded }) => {
-  const [query, setQuery] = useState<string>(""); // Search query
+  const [query, setQuery] = useState<string>(""); // Search query //text'box'a yazilan
   const [results, setResults] = useState<SearchResultType[]>([]); // API results
   const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
   const [debounceTimer, setDebounceTimer] = useState<number | null>(null); // Timer for debounce
@@ -38,7 +38,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ addedIds, onAdded }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [query, debounceTimer]);
+  }, [query]);
 
   const addToList = (result: SearchResultType) => {
     setResults((curr) => {
