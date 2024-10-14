@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Register the required chart components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const generateRandomPrices = (min: number, max: number, months: number): number[] => {
@@ -21,10 +20,8 @@ interface DataType {
 }
 
 const LineChart: React.FC = () => {
-  // Define months and price data
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const [data, setData] = useState<DataType | null>(null);
-  // Define chart data and options
 
   const options = {
     responsive: true,

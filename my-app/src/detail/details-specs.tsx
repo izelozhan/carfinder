@@ -15,8 +15,8 @@ const DetailSpecs: React.FC<{ car: CarDetailsType }> = ({ car }) => {
       >
         <div className="flex flex-col text-black items-start mr-4 text-left">
           <h3 className="text-2xl font-semibold">Details</h3>
-          <p>Type: {car.details.type}</p>
-          <p>Engine: {car.details.engine}</p>
+          <p> {car.details.type}</p>
+          <p>{car.details.engine}</p>
           <p>Horsepower: {car.details.horsepower}</p>
           <p>Torque: {car.details.torque}</p>
           <p>Transmission: {car.details.transmission}</p>

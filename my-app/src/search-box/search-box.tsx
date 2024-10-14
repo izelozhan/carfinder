@@ -15,23 +15,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({ addedIds, onAdded }) => {
   const [results, setResults] = useState<SearchResultType[]>([]); // API results
   const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
   const [debounceTimer, setDebounceTimer] = useState<number | null>(null); // Timer for debounce
+  
   const searchTextBox = useRef<HTMLInputElement>(null);
-
-  const fetchResults = async (searchQuery: string) => {
-    setIsLoading(true);
-
-    fetch(`${env.apiUrl}/search?q=${searchQuery}`)
-      .then((res) => res.json())
-      .then((data: SearchResultType[]) => {
-        setResults(data.filter((i) => !addedIds.includes(i.id)));
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        toast('An error occured while searching. Please try again');
-        console.log(err);
-        setIsLoading(false);
-      });
-  };
 
   useEffect(() => {
     if (query.trim() === "") {
@@ -53,7 +38,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ addedIds, onAdded }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [query]);
+  }, [query, debounceTimer]);
 
   const addToList = (result: SearchResultType) => {
     setResults((curr) => {
@@ -61,6 +46,22 @@ const SearchBox: React.FC<SearchBoxProps> = ({ addedIds, onAdded }) => {
     });
     setQuery("");
     onAdded(result);
+  };
+
+  const fetchResults = async (searchQuery: string) => {
+    setIsLoading(true);
+
+    fetch(`${env.apiUrl}/search?q=${searchQuery}`)
+      .then((res) => res.json())
+      .then((data: SearchResultType[]) => {
+        setResults(data.filter((i) => !addedIds.includes(i.id)));
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        toast("An error occured while searching. Please try again");
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -90,10 +91,11 @@ const SearchBox: React.FC<SearchBoxProps> = ({ addedIds, onAdded }) => {
           {isLoading && <div>Loading...</div>}
           <div>
             <div className="results rounded-3xl mt-4 absolute flex flex-col ">
-              {results && results.length > 0 && results.map((result) => (
-                    <SearchResult onAdded={addToList} result={result} />
-                  ))
-               }
+              {results &&
+                results.length > 0 &&
+                results.map((result) => (
+                  <SearchResult onAdded={addToList} result={result} />
+                ))}
             </div>
           </div>
         </div>

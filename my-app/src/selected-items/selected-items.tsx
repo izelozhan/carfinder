@@ -30,7 +30,6 @@ const SelectedItems: React.FC<SelectedItemsProps> = ({
                 <div className="flex flex-col items-center">
                   <img
                     height={226}
-                    
                     src={item.image}
                     alt={item.name}
                     className="rounded-lg w-80 h-56"

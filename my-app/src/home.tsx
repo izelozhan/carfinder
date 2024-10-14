@@ -7,8 +7,11 @@ import env from "./environment";
 
 const Home: React.FC = () => {
   const [ratings, setRatings] = useState<{ [key: number]: number }>({});
-  const navigate = useNavigate();
   const [added, setAdded] = useState<SearchResultType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
   const addToList = (result: SearchResultType) => {
     console.log(result);
     setAdded((curr) => [...curr, result]);
@@ -17,12 +20,12 @@ const Home: React.FC = () => {
       [result.id]: 3,
     }));
   };
+
   const deleteFromAdded = (item: SearchResultType) => {
     setAdded((curr) => {
       return curr.filter((i) => i.id != item.id);
     });
   };
-  const [loading, setLoading] = useState<boolean>(false);
 
   const onRatingsChange = (id: number, rating: number) => {
     setRatings((curr) => ({
@@ -31,30 +34,24 @@ const Home: React.FC = () => {
     }));
   };
 
-  const search = () => {
+  const findBestCar = () => {
     setLoading(true);
-
-    console.log(ratings);
-
-    setTimeout(() => {
-      //fake data cek
-
-      fetch(`${env.apiUrl}/find/`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(ratings),
+    fetch(`${env.apiUrl}/find/`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(ratings),
+    })
+      .then((res) => res.json())
+      .then(({ foundCarName }) => {
+        setLoading(false);
+        navigate(`/best-pick/${encodeURIComponent(foundCarName)}`);
       })
-        .then((res) => res.json())
-        .then(({ foundCarName }) => {
-          setLoading(false);
-          navigate(`/best-pick/${encodeURIComponent(foundCarName)}`);
-        })
-        .catch((err) => {
-          alert(err);
-          setLoading(false);
-        });
-    }, 1000);
+      .catch((err) => {
+        alert(err);
+        setLoading(false);
+      });
   };
+
   return (
     <>
       <SearchBox addedIds={added.map((i) => i.id)} onAdded={addToList} />
@@ -67,7 +64,7 @@ const Home: React.FC = () => {
       />
 
       <button
-        onClick={search}
+        onClick={findBestCar}
         className="findMeButton uppercase bg-white text-black mt-4"
         disabled={added.length != 3 || loading}
       >

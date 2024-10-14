@@ -2,7 +2,7 @@ import SearchResultType from "./search-result-type";
 
 interface SearchResultProps {
   result: SearchResultType;
-  onAdded: (result: SearchResultType) => void; // Define the onAdded event prop
+  onAdded: (result: SearchResultType) => void; 
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ result, onAdded }) => {
