@@ -1,0 +1,8 @@
+.results {
+  background: #fffffff0;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 999;
+  margin-left: -40px;
+  margin-right: -40px;
+}
