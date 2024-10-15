@@ -1,4 +1,4 @@
-# pacer-test
+# carfinder
 
 # to run api 
 cd api
